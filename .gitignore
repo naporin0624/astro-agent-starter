@@ -1,0 +1,14 @@
+node_modules
+dist
+.DS_Store
+*.log*
+*.tsbuildinfo
+
+.astro/
+.cloudflare/
+.wrangler/
+styled-system/
+
+# 手元だけの設定（壇上用は .claude/settings.local.json.example をコピーして作る）
+.claude/settings.local.json
+.env*

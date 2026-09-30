@@ -1,0 +1,61 @@
+{
+  "name": "llm-series-03-starter",
+  "version": "0.0.0",
+  "private": true,
+  "description": "LLM 活用シリーズ 第三回のデモ兼配布リポジトリ（Astro static + React islands を cf で deploy）",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "photos": "node tools/photos/photos-cli.ts",
+    "photos:check": "vitest run tools/photos/photos-dir.test.ts",
+    "check:wgsl": "sh -c 'for f in src/shaders/*.wgsl; do [ -e \"$f\" ] || continue; vgpu check \"$f\" || exit 1; done'",
+    "test:run": "vitest run --passWithNoTests",
+    "typecheck": "tsgo --noEmit",
+    "lint": "oxlint --type-aware .",
+    "fmt": "oxfmt --write . && oxlint --type-aware --fix .",
+    "fmt:check": "oxfmt --check .",
+    "prepare": "husky && panda codegen",
+    "deploy": "astro build && cf-wrangler build && cf deploy --prebuilt"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.0.0",
+    "@gsap/react": "^2.1.2",
+    "astro": "^7.3.5",
+    "gsap": "^3.15.0",
+    "neverthrow": "^8.2.0",
+    "react": "^19.3.0",
+    "react-aria-components": "^1.21.1",
+    "react-dom": "^19.3.0",
+    "sharp": "^0.35.5",
+    "vgpu": "^0.5.0"
+  },
+  "devDependencies": {
+    "@pandacss/dev": "^1.12.1",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/node": "^24.19.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "@vgpu/wgsl": "^0.5.0",
+    "@webgpu/types": "^0.1.74",
+    "cf": "1.0.0-beta.5",
+    "husky": "^9.1.7",
+    "jsdom": "^30.1.1",
+    "lint-staged": "^17.6.0",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
+    "oxlint-tsgolint": "^7.0.2003",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.2",
+    "wrangler": "^4.143.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "oxlint --type-aware",
+    "*.{ts,tsx,json,jsonc,css,md,yaml}": "oxfmt --check",
+    "photos/**": "sh -c \"pnpm photos:check\""
+  }
+}

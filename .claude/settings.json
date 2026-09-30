@@ -1,0 +1,55 @@
+{
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "learning-output-style@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(pnpm run build)",
+      "Bash(pnpm build)",
+      "Bash(pnpm test:run)",
+      "Bash(pnpm run test:run)",
+      "Bash(pnpm typecheck)",
+      "Bash(pnpm run typecheck)",
+      "Bash(pnpm lint)",
+      "Bash(pnpm run lint)",
+      "Bash(pnpm fmt)",
+      "Bash(pnpm run fmt)",
+      "Bash(pnpm fmt:check)",
+      "Bash(pnpm run fmt:check)",
+      "Bash(mise exec -- pnpm run build)",
+      "Bash(mise exec -- pnpm test:run)",
+      "Bash(mise exec -- pnpm typecheck)",
+      "Bash(mise exec -- pnpm lint)",
+      "Bash(mise exec -- pnpm fmt)",
+      "Bash(mise exec -- pnpm fmt:check)"
+    ],
+    "ask": ["Bash(pnpm run deploy)", "Bash(mise exec -- pnpm run deploy)"],
+    "deny": [
+      "Bash(pnpm deploy)",
+      "Bash(pnpm deploy *)",
+      "Bash(mise exec -- pnpm deploy *)",
+      "Bash(cf deploy)",
+      "Bash(cf deploy *)",
+      "Bash(* cf deploy)",
+      "Bash(* cf deploy *)",
+      "Bash(cf auth *)",
+      "Bash(* cf auth *)",
+      "Bash(wrangler deploy *)",
+      "Bash(* wrangler deploy *)",
+      "Bash(* whoami*)",
+      "Bash(whoami*)",
+      "Bash(env)",
+      "Bash(printenv)",
+      "Bash(printenv *)",
+      "Read(~/.config/cloudflare/**)",
+      "Read(./.env*)"
+    ]
+  }
+}
