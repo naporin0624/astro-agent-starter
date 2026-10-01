@@ -12,3 +12,4 @@ styled-system/
 # 手元だけの設定（壇上用は .agents/settings.local.json.example をコピーして作る）
 .agents/settings.local.json
 .env*
+.agents/scheduled_tasks.lock
