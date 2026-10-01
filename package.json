@@ -1,5 +1,5 @@
 {
-  "name": "llm-series-03-starter",
+  "name": "astro-agent-starter",
   "version": "0.0.0",
   "private": true,
   "description": "LLM 活用シリーズ 第三回のデモ兼配布リポジトリ（Astro static + React islands を cf で deploy）",

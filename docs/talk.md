@@ -17,4 +17,4 @@
 ## リンク
 
 - スライド: https://slides.napochaan.com
-- このリポジトリ: https://github.com/naporin0624/llm-series-03-starter
+- このリポジトリ: https://github.com/naporin0624/astro-agent-starter

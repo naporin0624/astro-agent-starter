@@ -1,4 +1,4 @@
-# llm-series-03-starter
+# astro-agent-starter
 
 「事業開発に活きる 生成AI講座 第3回 — ソフトウェアエンジニアの、AI の扱い方」の配布物です。
 
@@ -13,8 +13,8 @@
 
 1. clone して依存を入れる
    ```sh
-   git clone https://github.com/naporin0624/llm-series-03-starter.git
-   cd llm-series-03-starter
+   git clone https://github.com/naporin0624/astro-agent-starter.git
+   cd astro-agent-starter
    mise install
    mise exec -- pnpm install   # mise を使わないなら pnpm install
    ```
@@ -93,7 +93,7 @@ Codex で使うときも、同じ指示書と skills が読まれます（`AGENT
 自分で書いた skills は、このリポジトリを marketplace（`napochaan-skills`）にして plugin として配っています。starter を clone しなくても、必要なテーマだけ入れられます。
 
 ```sh
-claude plugin marketplace add naporin0624/llm-series-03-starter
+claude plugin marketplace add naporin0624/astro-agent-starter
 claude plugin install typescript-modeling@napochaan-skills
 ```
 
