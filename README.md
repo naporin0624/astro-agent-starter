@@ -1,33 +1,64 @@
 # llm-series-03-starter
 
-LLM 活用シリーズ 第三回の配布物です。
+「事業開発に活きる 生成AI講座 第3回 — ソフトウェアエンジニアの、AI の扱い方」の配布物です。
 
-発表のライブデモで、Claude Code がこのリポジトリの上でこの発表のイベントのページを作り、Cloudflare に deploy しました。会場で映した `CLAUDE.md`、`.claude/rules/`、`.claude/skills/` は、ここにあるものと同じです。
+発表のライブデモでは、Claude Code がこのリポジトリの上で、この発表のイベントのページを作って Cloudflare に deploy しました。会場で映した指示書（`CLAUDE.md`）、rules、skills は、ここにあるものと同じです。
 
-`src/pages/` は空の状態で置いています。ページはデモで作りました。
+- `src/pages/` は空にしてあります。ページはデモの中で作りました
+- ページに載せる中身は `docs/talk.md` にあります。同じことを試すときの材料にしてください
 
 ## 最初の一歩
 
-1. [Claude Code](https://code.claude.com/docs) を入れる
-2. このリポジトリを clone する
+必要なもの: [mise](https://mise.jdx.dev/)（Node 24 と pnpm 12 を `mise.toml` で固定しています）と、Claude Code か Codex。
+
+1. clone して依存を入れる
    ```sh
    git clone https://github.com/naporin0624/llm-series-03-starter.git
    cd llm-series-03-starter
+   mise install
    mise exec -- pnpm install   # mise を使わないなら pnpm install
    ```
-3. Claude Code を起動し、superpowers を入れる
+2. Claude Code を起動し、superpowers を入れる
    ```
    /plugin install superpowers@claude-plugins-official
    ```
-4. 作りたいものを、自分の言葉で伝える。Claude Code が質問してくるので、答える
+3. 作りたいものを、自分の言葉で伝える。Claude Code が質問してくるので、答える
+
+Codex で使うときも、同じ指示書と skills が読まれます（`AGENTS.md` と `.agents/` が本体で、`CLAUDE.md` と `.claude` はそこを指す symlink です）。
 
 ## そのままコピーせず、1 行から
 
-ここにある `CLAUDE.md` と rules・skills は、自分が何度もレビューで言ったことを積み上げたものです。自分の手元では効いていますが、あなたのプロジェクトで同じように効くとは限りません。
+ここにある `AGENTS.md` と rules・skills は、自分が何度もレビューで言ったことを積み上げたものです。自分の手元では効いていますが、あなたのプロジェクトで同じように効くとは限りません。
 
-- まず `CLAUDE.md` の中から、あなたが困っていることに当たる 1 行だけを持っていってください
-- `CLAUDE.md` は、rules と skills と組になって効きます。`CLAUDE.md` だけを写しても、指している rule が無ければ効きません
+- まず `AGENTS.md` の中から、あなたが困っていることに当たる 1 行だけを持っていってください
+- `AGENTS.md` は、rules と skills と組になって効きます。`AGENTS.md` だけを写しても、指している rule が無ければ効きません
 - レビューで同じことを 2 回言ったら、それが次の 1 行です。skill にするときは superpowers の `writing-skills` で、テストを先に書いてから作ります
+
+## 中身の地図
+
+```
+.
+├── AGENTS.md                  毎回言っていること（指示書の本体）
+├── CLAUDE.md -> AGENTS.md     Claude Code 用の入口
+├── .agents/
+│   ├── rules/                 書き方の約束。対象のファイルを触ったときに読まれる
+│   ├── skills/                手順と判断のしかた。必要になったときに読まれる
+│   ├── settings.json          Claude Code の permissions と plugin
+│   └── settings.local.json.example
+├── .claude -> .agents         Claude Code 用の入口
+├── .claude-plugin/
+│   └── marketplace.json       自作の skills を plugin として配る
+├── plugins/<plugin>/skills/   .agents/skills/ への symlink（marketplace 用）
+├── docs/talk.md               イベントのページに載せる中身
+├── photos/                    写真の置き場（pnpm photos を通してから使う）
+├── src/pages/                 空。ここにページを作る
+├── tools/
+│   ├── oxlint-plugins/        lint の自作ルール（トップレベルの let、Number(x) など）
+│   └── photos/                写真のメタデータを消して縮める CLI
+├── astro.config.ts            Astro（static）+ React islands
+├── panda.config.ts            Panda CSS。token は src/design-system/ に置く
+└── cloudflare.config.ts       deploy 先の Worker 名（workers.dev に出す）
+```
 
 ## ツールの 2 段
 
@@ -35,12 +66,10 @@ LLM 活用シリーズ 第三回の配布物です。
 
 | 道具                  | ここでの役目                                                                     |
 | --------------------- | -------------------------------------------------------------------------------- |
-| Claude Code           | 作業する本体                                                                     |
+| Claude Code / Codex   | 作業する本体                                                                     |
 | superpowers（plugin） | 伝える → 質問させて spec にする → 小さいタスクに分ける → TDD、の流れを持ってくる |
 | `AGENTS.md`           | 毎回言っていることを、最初から読ませる                                           |
 | AskUserQuestion       | 作る前に、Claude に質問させる。要件のブレはここで消す                            |
-
-`AGENTS.md` と `.agents/` が本体で、`CLAUDE.md` と `.claude` はそれを指す symlink です。Claude Code と Codex のどちらからも同じ約束が読まれます。
 
 ### 仕組みで守らせる（言っても守られないものを、機械で止める）
 
@@ -56,6 +85,46 @@ LLM 活用シリーズ 第三回の配布物です。
 | `.agents/settings.json` の permissions               | deploy は毎回確認、危ないコマンドは実行させない                                            |
 
 そのほかの plugin（`.agents/settings.json` の `enabledPlugins`、すべて `claude-plugins-official`）: learning-output-style、explanatory-output-style、context7、code-simplifier、frontend-design、typescript-lsp、security-guidance。
+
+壇上のように output style を切りたいときは、`.agents/settings.local.json.example` を `.agents/settings.local.json` にコピーします。
+
+## skills だけ欲しいとき
+
+自分で書いた skills は、このリポジトリを marketplace（`napochaan-skills`）にして plugin として配っています。starter を clone しなくても、必要なテーマだけ入れられます。
+
+```sh
+claude plugin marketplace add naporin0624/llm-series-03-starter
+claude plugin install typescript-modeling@napochaan-skills
+```
+
+| plugin                | 入っている skills                                                                                                                                                                                                             |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `typescript-modeling` | precise-type-modeling、branching-modeled-state-with-switch、switch-pattern、explicit-primitive-conversion、prefix-match-processor、chaining-neverthrow-results、modeling-errors-as-classes、wrapping-throwing-apis-in-results |
+| `web-perf`            | debugging-cumulative-layout-shift、diagnosing-missing-edge-compression                                                                                                                                                        |
+| `workflow`            | smart-commit、file-colocation                                                                                                                                                                                                 |
+
+- `workflow` の file-colocation は、このリポジトリの構成（Astro + React islands + Panda CSS）が前提です
+- `plugins/<plugin>/skills/` は `.agents/skills/` への symlink です。install のときに実体がコピーされます
+- 第三者の skills（下の表）は含めていないので、それぞれの配布元から入れてください
+
+## 開発のコマンド
+
+| コマンド            | やること                                           |
+| ------------------- | -------------------------------------------------- |
+| `pnpm dev`          | 開発サーバー（:4321）                              |
+| `pnpm build`        | build（`dist/llm-series-03/` に出る）              |
+| `pnpm preview`      | build したものを見る                               |
+| `pnpm test:run`     | vitest。テストは実装と同じディレクトリに置く       |
+| `pnpm typecheck`    | tsgo で型チェック                                  |
+| `pnpm lint`         | oxlint（`--type-aware`）                           |
+| `pnpm fmt`          | oxfmt で整形し、oxlint で直せるものを直す          |
+| `pnpm fmt:check`    | 整形の確認だけ                                     |
+| `pnpm photos`       | `photos/` の写真のメタデータを消して縮める         |
+| `pnpm photos:check` | メタデータが残った写真がないかを確かめる           |
+| `pnpm check:wgsl`   | `src/shaders/` の WGSL を `vgpu check` にかける    |
+| `pnpm run deploy`   | Cloudflare に deploy（下の「deploy」を読んでから） |
+
+commit のときは husky が `pnpm typecheck` と lint-staged（oxlint、oxfmt の確認、写真のメタデータの確認）を走らせます。通らないと commit できません。
 
 ## 写真を入れるとき
 
@@ -82,26 +151,8 @@ pnpm run deploy   # astro build && cf-wrangler build && cf deploy --prebuilt
 - 素の `cf deploy`（`--prebuilt` なし）は、Astro の static を deploy できません
 - `cf` はベータなので `1.0.0-beta.5` に固定しています
 - アカウントは `cf auth login` のプロファイルか、`CLOUDFLARE_ACCOUNT_ID` で渡します。`cloudflare.config.ts` には書きません
-- 自分で使うときは、`cloudflare.config.ts` の worker 名と route、`astro.config.ts` の `base` / `outDir` を自分のものに変えてください
-
-壇上のように output style を切りたいときは、`.agents/settings.local.json.example` を `.agents/settings.local.json` にコピーします。
-
-## skills を plugin として入れる
-
-自分で書いた skills は、このリポジトリを marketplace にして plugin として配っています。必要なテーマだけ入れられます。
-
-| plugin                | 入っている skills                                                                                                                                                                                                             |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `typescript-modeling` | precise-type-modeling、branching-modeled-state-with-switch、switch-pattern、explicit-primitive-conversion、prefix-match-processor、chaining-neverthrow-results、modeling-errors-as-classes、wrapping-throwing-apis-in-results |
-| `web-perf`            | debugging-cumulative-layout-shift、diagnosing-missing-edge-compression                                                                                                                                                        |
-| `workflow`            | smart-commit、file-colocation                                                                                                                                                                                                 |
-
-```sh
-claude plugin marketplace add naporin0624/llm-series-03-starter
-claude plugin install typescript-modeling@napochaan-skills
-```
-
-本体は `.agents/skills/` にあり、`plugins/<plugin>/skills/` はそこを指す symlink です。install のときに実体がコピーされます。第三者の skills（下の表）は含めていないので、それぞれの配布元から入れてください。
+- deploy 先は `https://llm-series-03.<あなたのサブドメイン>.workers.dev/llm-series-03/` です（`astro.config.ts` の `base` の下に出ます）
+- 自分のドメインに出すときは、`cloudflare.config.ts` に route を足し、`astro.config.ts` の `base` / `outDir` を合わせてください
 
 ## 第三者の skills
 
