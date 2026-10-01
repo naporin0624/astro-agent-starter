@@ -1,0 +1,31 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "napochaan-skills",
+  "owner": {
+    "name": "naporitan",
+    "url": "https://github.com/naporin0624"
+  },
+  "metadata": {
+    "description": "LLM 活用シリーズ第三回で使った、naporitan が書いた skills"
+  },
+  "plugins": [
+    {
+      "name": "typescript-modeling",
+      "description": "TypeScript の型の書き方と、neverthrow の Result でエラーを扱う書き方",
+      "source": "./plugins/typescript-modeling",
+      "strict": false
+    },
+    {
+      "name": "web-perf",
+      "description": "CLS と、Cloudflare で圧縮されないレスポンスの調べ方",
+      "source": "./plugins/web-perf",
+      "strict": false
+    },
+    {
+      "name": "workflow",
+      "description": "commit を論理的に分ける手順と、Astro + React islands + Panda CSS でのファイルの置き方",
+      "source": "./plugins/workflow",
+      "strict": false
+    }
+  ]
+}

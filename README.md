@@ -86,6 +86,23 @@ pnpm run deploy   # astro build && cf-wrangler build && cf deploy --prebuilt
 
 壇上のように output style を切りたいときは、`.agents/settings.local.json.example` を `.agents/settings.local.json` にコピーします。
 
+## skills を plugin として入れる
+
+自分で書いた skills は、このリポジトリを marketplace にして plugin として配っています。必要なテーマだけ入れられます。
+
+| plugin                | 入っている skills                                                                                                                                                                                                             |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `typescript-modeling` | precise-type-modeling、branching-modeled-state-with-switch、switch-pattern、explicit-primitive-conversion、prefix-match-processor、chaining-neverthrow-results、modeling-errors-as-classes、wrapping-throwing-apis-in-results |
+| `web-perf`            | debugging-cumulative-layout-shift、diagnosing-missing-edge-compression                                                                                                                                                        |
+| `workflow`            | smart-commit、file-colocation                                                                                                                                                                                                 |
+
+```sh
+claude plugin marketplace add naporin0624/llm-series-03-starter
+claude plugin install typescript-modeling@napochaan-skills
+```
+
+本体は `.agents/skills/` にあり、`plugins/<plugin>/skills/` はそこを指す symlink です。install のときに実体がコピーされます。第三者の skills（下の表）は含めていないので、それぞれの配布元から入れてください。
+
 ## 第三者の skills
 
 次の skills は、それぞれの公式リポジトリから `npx skills add` で取り込んだものです。版は `skills-lock.json`（中身のハッシュ）で固定しています。ライセンスはそれぞれのリポジトリのものに従います。
