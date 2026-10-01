@@ -74,7 +74,7 @@ See: @.agents/rules/react.md#async-handler-rules-no-thencatch
 - **Motion**: GSAP (`ScrollTrigger`, `gsap.quickTo`, `gsap.ticker` as the single frame loop)
 - **Rendering**: WebGPU via `vgpu`; WGSL in `src/shaders/` (see `shader-files.md`)
 - **Errors**: neverthrow `Result` (skills `chaining-neverthrow-results`, `modeling-errors-as-classes`)
-- **Build / Deploy**: `astro build` → `cf-wrangler build` → `cf deploy --prebuilt` (Cloudflare Workers Static Assets, route `talks.napochaan.dev/llm-series-03*`)
+- **Build / Deploy**: `astro build` → `cf-wrangler build` → `cf deploy --prebuilt` (Cloudflare Workers Static Assets, served on `workers.dev` under `/llm-series-03/`)
 - **Test**: vitest (+ jsdom and Testing Library for components)
 - **Lint**: oxlint (`.oxlintrc.json`, functional/immutable rules) — run via husky pre-commit too
 - **Formatting**: oxfmt

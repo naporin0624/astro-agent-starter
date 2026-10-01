@@ -1,4 +1,4 @@
-import { defineConfig, triggers } from 'cf/config';
+import { defineConfig } from 'cf/config';
 
 // accountId は書かない。CLOUDFLARE_ACCOUNT_ID か `cf auth login` の profile で渡す。
 export default defineConfig({
@@ -8,9 +8,8 @@ export default defineConfig({
     assets: {
       notFoundHandling: '404-page',
     },
-    // パスで分けるので Custom Domain ではなく zone の route。zone は deploy するアカウントに必要。
-    triggers: [triggers.fetch({ pattern: 'talks.napochaan.dev/llm-series-03*', zone: 'napochaan.dev' })],
-    workersDev: false,
+    // ページは astro.config.ts の base に合わせて /llm-series-03/ の下に出る。
+    workersDev: true,
     previewUrls: false,
   },
 });
