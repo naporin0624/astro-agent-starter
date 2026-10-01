@@ -11,7 +11,7 @@ argument-hint: "[file-or-directory-glob]"
 
 # Switch Pattern
 
-Refactor `if`-based pattern matching on a single discriminated value (HTTP status, event type, mode) to `switch` blocks. Backs the project rule documented in `.claude/rules/early-return.md` (`Switch for Discriminated Unions`).
+Refactor `if`-based pattern matching on a single discriminated value (HTTP status, event type, mode) to `switch` blocks. Backs the project rule documented in `.agents/rules/early-return.md` (`Switch for Discriminated Unions`).
 
 ## When to use this skill
 

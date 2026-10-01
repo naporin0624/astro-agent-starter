@@ -37,23 +37,25 @@ LLM 活用シリーズ 第三回の配布物です。
 | --------------------- | -------------------------------------------------------------------------------- |
 | Claude Code           | 作業する本体                                                                     |
 | superpowers（plugin） | 伝える → 質問させて spec にする → 小さいタスクに分ける → TDD、の流れを持ってくる |
-| `CLAUDE.md`           | 毎回言っていることを、最初から読ませる                                           |
+| `AGENTS.md`           | 毎回言っていることを、最初から読ませる                                           |
 | AskUserQuestion       | 作る前に、Claude に質問させる。要件のブレはここで消す                            |
+
+`AGENTS.md` と `.agents/` が本体で、`CLAUDE.md` と `.claude` はそれを指す symlink です。Claude Code と Codex のどちらからも同じ約束が読まれます。
 
 ### 仕組みで守らせる（言っても守られないものを、機械で止める）
 
 | 道具                                                 | ここでの役目                                                                               |
 | ---------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `.claude/rules/`                                     | 書き方の約束。対象のファイルを触ったときに読まれる                                         |
-| `.claude/skills/`                                    | 手順と判断のしかた。必要になったときに読まれる                                             |
+| `.agents/rules/`                                     | 書き方の約束。対象のファイルを触ったときに読まれる                                         |
+| `.agents/skills/`                                    | 手順と判断のしかた。必要になったときに読まれる                                             |
 | oxlint（`.oxlintrc.json` + `tools/oxlint-plugins/`） | 約束のうち、機械で判定できるものを止める（`push`、トップレベルの `let`、`Number(x)` など） |
 | oxfmt                                                | 整形                                                                                       |
 | tsgo（`@typescript/native-preview`）                 | 型チェック                                                                                 |
 | vitest                                               | テスト。TDD の「落ちて、通る」を見る                                                       |
 | husky + lint-staged                                  | commit の前に型チェックと lint を必ず通す                                                  |
-| `.claude/settings.json` の permissions               | deploy は毎回確認、危ないコマンドは実行させない                                            |
+| `.agents/settings.json` の permissions               | deploy は毎回確認、危ないコマンドは実行させない                                            |
 
-そのほかの plugin（`.claude/settings.json` の `enabledPlugins`、すべて `claude-plugins-official`）: learning-output-style、explanatory-output-style、context7、code-simplifier、frontend-design、typescript-lsp、security-guidance。
+そのほかの plugin（`.agents/settings.json` の `enabledPlugins`、すべて `claude-plugins-official`）: learning-output-style、explanatory-output-style、context7、code-simplifier、frontend-design、typescript-lsp、security-guidance。
 
 ## 写真を入れるとき
 
@@ -68,7 +70,7 @@ mise exec -- pnpm photos
 - メタデータが残った写真があると、`pnpm test:run` が落ち、commit もできません（lint-staged が `pnpm photos:check` を走らせます）。公開リポジトリの履歴に GPS を残さないためです
 - 顔が写った写真は入れません。これは機械では止められないので、入れる人が見て決めます
 
-ページでは astro:assets の `<Image>` / `<Picture>` で表示し、build のときに縮小・変換されます。書き方は `.claude/rules/images.md` にあります。
+ページでは astro:assets の `<Image>` / `<Picture>` で表示し、build のときに縮小・変換されます。書き方は `.agents/rules/images.md` にあります。
 
 ## deploy
 
@@ -82,7 +84,7 @@ pnpm run deploy   # astro build && cf-wrangler build && cf deploy --prebuilt
 - アカウントは `cf auth login` のプロファイルか、`CLOUDFLARE_ACCOUNT_ID` で渡します。`cloudflare.config.ts` には書きません
 - 自分で使うときは、`cloudflare.config.ts` の worker 名と route、`astro.config.ts` の `base` / `outDir` を自分のものに変えてください
 
-壇上のように output style を切りたいときは、`.claude/settings.local.json.example` を `.claude/settings.local.json` にコピーします。
+壇上のように output style を切りたいときは、`.agents/settings.local.json.example` を `.agents/settings.local.json` にコピーします。
 
 ## 第三者の skills
 
@@ -91,7 +93,7 @@ pnpm run deploy   # astro build && cf-wrangler build && cf deploy --prebuilt
 | skills                                                                                                                       | 出どころ                                                                                                                                                                            | commit                                     | ライセンス                                                                               |
 | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------- |
 | gsap-core / gsap-frameworks / gsap-performance / gsap-plugins / gsap-react / gsap-scrolltrigger / gsap-timeline / gsap-utils | [greensock/gsap-skills](https://github.com/greensock/gsap-skills)（`npx skills add greensock/gsap-skills`）                                                                         | `aed9cfd3277740755f6bfc1155c7aa645403b760` | MIT, Copyright (c) 2026 GreenSock（各 skill の `LICENSE`）                               |
-| vgpu                                                                                                                         | [vercel-labs/vgpu](https://github.com/vercel-labs/vgpu)（`npx skills add vercel-labs/vgpu`）                                                                                        | `341101abcf3c781721766bee6d03fc82c9d91f54` | MIT, Copyright (c) 2025 Vercel, Inc.（`.claude/skills/vgpu/LICENSE`）                    |
-| security-audit                                                                                                               | [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill)（`npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit`） | `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8` | MIT, Copyright (c) 2025-2026 Cloudflare, Inc.（`.claude/skills/security-audit/LICENSE`） |
+| vgpu                                                                                                                         | [vercel-labs/vgpu](https://github.com/vercel-labs/vgpu)（`npx skills add vercel-labs/vgpu`）                                                                                        | `341101abcf3c781721766bee6d03fc82c9d91f54` | MIT, Copyright (c) 2025 Vercel, Inc.（`.agents/skills/vgpu/LICENSE`）                    |
+| security-audit                                                                                                               | [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill)（`npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit`） | `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8` | MIT, Copyright (c) 2025-2026 Cloudflare, Inc.（`.agents/skills/security-audit/LICENSE`） |
 
 それ以外の rules と skills は、自分（naporitan）が自分のプロジェクトのために書いたものを、公開用に書き直したものです。

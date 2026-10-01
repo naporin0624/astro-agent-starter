@@ -17,7 +17,7 @@
 | `pnpm dev`        | Astro dev server on :4321                                                |
 | `pnpm build`      | Production build (`astro build` → `dist/llm-series-03/`)                 |
 | `pnpm preview`    | Serve the production build                                               |
-| `pnpm photos`     | Strip EXIF / XMP / IPTC from `photos/` and shrink the long edge to 2400px, in place (`.claude/rules/images.md`) |
+| `pnpm photos`     | Strip EXIF / XMP / IPTC from `photos/` and shrink the long edge to 2400px, in place (`.agents/rules/images.md`) |
 | `pnpm photos:check` | Fail if a photo in `photos/` still carries metadata (also run by lint-staged) |
 | `pnpm test:run`   | vitest (colocated `*.test.ts(x)`)                                        |
 | `pnpm typecheck`  | Type check with `@typescript/native-preview` (tsgo)                      |
@@ -65,7 +65,7 @@ const handleClick = useCallback(() => {
 }, []);
 ```
 
-See: @.claude/rules/react.md#async-handler-rules-no-thencatch
+See: @.agents/rules/react.md#async-handler-rules-no-thencatch
 
 ## Tech Stack
 

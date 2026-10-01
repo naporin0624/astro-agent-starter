@@ -15,10 +15,10 @@
 - vitest を利用した TDD で実装すること（`pnpm test:run`。テストは実装と同じディレクトリに colocate する）
 - husky の pre-commit で `pnpm typecheck && pnpm lint-staged` が走る。フックを skip して commit しないこと
 - 勝手に commit しないこと
-- アニメーションは gsap（`@gsap/react` の `useGSAP`）を利用すること。詳細は `.claude/skills/gsap-*` に従うこと
-  - 止める手段（WCAG 2.2.2）・`prefers-reduced-motion`・WebGPU が無いときの表示は `.claude/rules/motion.md` に従うこと
-- 写真は `photos/` に置き、`pnpm photos`（メタデータ削除・縮小）を通してから使うこと。表示は astro:assets の `<Image>` / `<Picture>`。詳細は `.claude/rules/images.md`
-- 外の購読と DOM をつなぐ処理は presenter（`mountXxx(el)` / `useXxx()`）に置くこと。詳細は `.claude/rules/presenter.md`
+- アニメーションは gsap（`@gsap/react` の `useGSAP`）を利用すること。詳細は `.agents/skills/gsap-*` に従うこと
+  - 止める手段（WCAG 2.2.2）・`prefers-reduced-motion`・WebGPU が無いときの表示は `.agents/rules/motion.md` に従うこと
+- 写真は `photos/` に置き、`pnpm photos`（メタデータ削除・縮小）を通してから使うこと。表示は astro:assets の `<Image>` / `<Picture>`。詳細は `.agents/rules/images.md`
+- 外の購読と DOM をつなぐ処理は presenter（`mountXxx(el)` / `useXxx()`）に置くこと。詳細は `.agents/rules/presenter.md`
 - 実装は小さいタスクに分けて実装すること。実装が終わったら私に review 依頼すること
 - review で繰り返し受けた内容は rules, skills にすることで永続化して
   - review の内容はまず memory に記憶して繰り返し指摘されるものは skills にすること
@@ -41,11 +41,11 @@
 - あなたは実装計画、ステークホルダーである私に対して要件のブレがなくなるまで AskUserQuestion で質問することに努め、実装は subagent に任せること
 - 関数は単一責任で実装すること
 - 同時に命令が複数来た時は Task で優先順位をつけて subagent に実装を任せること
-- 詳細は `.claude/rules/*.md` に従うこと
+- 詳細は `.agents/rules/*.md` に従うこと
 
 ## ui rules
 
-- UI 全体で **WCAG 2.2 Level AA** を例外なしで満たすこと（色トークンに限らない）。詳細は `.claude/rules/accessibility.md` に従うこと
+- UI 全体で **WCAG 2.2 Level AA** を例外なしで満たすこと（色トークンに限らない）。詳細は `.agents/rules/accessibility.md` に従うこと
 - UI は文脈に沿った内容にすること
   - 機械的なUIの利用は徹底的に避けること
   - 伝えたい情報はどんなものでその情報に適切な UI を常に考察、模索すること

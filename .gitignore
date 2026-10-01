@@ -9,6 +9,6 @@ dist
 .wrangler/
 styled-system/
 
-# 手元だけの設定（壇上用は .claude/settings.local.json.example をコピーして作る）
-.claude/settings.local.json
+# 手元だけの設定（壇上用は .agents/settings.local.json.example をコピーして作る）
+.agents/settings.local.json
 .env*
