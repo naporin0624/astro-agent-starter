@@ -1,11 +1,17 @@
 # astro-agent-starter
 
-「事業開発に活きる 生成AI講座 第3回 — ソフトウェアエンジニアの、AI の扱い方」の配布物です。
+Claude Code や Codex に作業を任せるための、Astro の starter です。
 
-発表のライブデモでは、Claude Code がこのリポジトリの上で、この発表のイベントのページを作って Cloudflare に deploy しました。会場で映した指示書（`CLAUDE.md`）、rules、skills は、ここにあるものと同じです。
+指示書（`AGENTS.md`）、書き方の約束（rules）、手順（skills）と、約束を機械で止める lint・型チェック・テスト・pre-commit が最初から入っています。Astro（static）+ React islands + Panda CSS で作ったページを、Cloudflare Workers に deploy するところまでつながっています。
 
-- `src/pages/` は空にしてあります。ページはデモの中で作りました
-- ページに載せる中身は `docs/talk.md` にあります。同じことを試すときの材料にしてください
+- `src/pages/` は空です。作りたいものを伝えるところから始めます
+- skills だけ欲しいときは、clone せずに plugin として入れられます（「[skills だけ欲しいとき](#skills-だけ欲しいとき)」）
+
+## 生まれたところ
+
+「事業開発に活きる 生成AI講座 第3回 — ソフトウェアエンジニアの、AI の扱い方」の配布物として作りました。
+
+発表のライブデモでは、Claude Code がこのリポジトリの上でイベントのページを作り、Cloudflare に deploy しました。会場で映した指示書、rules、skills は、ここにあるものと同じです。ページに載せた中身は `docs/talk.md` に残してあるので、同じことを試すときの材料にしてください。
 
 ## 最初の一歩
 
